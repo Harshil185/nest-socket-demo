@@ -40,8 +40,8 @@ Users can:
 Clone the repository and install dependencies:
 
 ```bash
-$ git clone https://github.com/your-repo/chat-app-nestjs.git
-$ cd chat-app-nestjs
+$ git clone https://github.com/Harshil185/nest-socket-demo.git
+$ cd nest-socket-demo
 $ npm install
 ```
 
