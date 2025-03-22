@@ -58,47 +58,39 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
 ## License
 
 Nest is [MIT licensed](LICENSE).
 
 Real-Time Chat Application with NestJS & WebSockets 🚀
-A real-time chat application built using NestJS WebSockets on the backend and HTML, JavaScript, and Socket.io on the frontend. This project demonstrates real-time communication, room-based chat, and user presence tracking.
+A real-time chat application built using NestJS WebSockets on the backend and HTML, JavaScript, and Socket.io on the frontend. This project demonstrates real-time communication, room-based chat, user presence tracking, and persistent storage of data.
 
 📌 Features
+
 ✅ Join a Chat Room → Users enter a username and room name to join.
+
 ✅ Real-time Messaging → Messages appear instantly in the room.
+
 ✅ User Presence Tracking → See who is in the room at any time.
+
 ✅ User Join & Leave Notifications → All users see updates when someone joins or leaves.
+
 ✅ Modern UI → Fully responsive and professional design.
 
+✅ Data Persistence → Users and messages are stored in MongoDB.
+
 🛠️ Tech Stack
+
 Backend (NestJS WebSocket Server)
+
 NestJS (with @nestjs/websockets)
+
 Socket.io (for real-time communication)
+
+MongoDB (for storing users and messages)
+
 Frontend (HTML + JavaScript Client)
+
 HTML + CSS (Styled for a professional look)
+
 JavaScript (Client-side Socket.io for WebSockets)
