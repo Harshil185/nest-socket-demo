@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Chat with NestJS</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <!-- <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #chat-container {
+            width: 50%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        #messages {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        input, button {
+            padding: 10px;
+            margin: 5px;
+        }
+        #roomUsers {
+            font-size: 14px;
+            color: gray;
+        }
+    </style> -->
+</head>
+<body>
+
+    <div id="chat-container">
+        <h1>Real-time Chat with WebSockets (NestJS)</h1>
+        <div>
+            <input type="text" id="username" placeholder="Enter your name">
+            <input type="text" id="room" placeholder="Enter room name">
+            <div id="button-container">
+                <button id="joinBtn" onclick="joinRoom()">Join Room</button>
+                <button id="leaveBtn" onclick="leaveRoom()">Leave Room</button>
+            </div>
+        </div>
+
+        <h3>Room: <span id="roomName">None</span></h3>
+        <div id="roomUsers">No users in room</div>
+
+        <div id="messages"></div>
+
+        <div>
+            <input type="text" id="message" placeholder="Type a message">
+            <button id="sendBtn" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const socket = io("http://localhost:3004");  // Replace with your backend WebSocket URL
+
+        let currentRoom = "";
+        let username = "";
+
+        function joinRoom() {
+            username = document.getElementById("username").value.trim();
+            const room = document.getElementById("room").value.trim();
+
+            if (!username || !room) {
+                alert("Please enter both username and room name.");
+                return;
+            }
+
+            // Clear previous chat when switching rooms
+            document.getElementById("messages").innerHTML = "";
+
+            socket.emit("joinRoom", { room, username });
+            currentRoom = room;
+            document.getElementById("roomName").innerText = room;
+        }
+
+        function leaveRoom() {
+            if (!currentRoom) {
+                alert("You're not in any room.");
+                return;
+            }
+
+            socket.emit("leaveRoom", currentRoom);
+            document.getElementById("roomName").innerText = "None";
+            document.getElementById("messages").innerHTML = "";
+            document.getElementById("roomUsers").innerText = "No users in room";
+            currentRoom = "";
+        }
+
+        function sendMessage() {
+            if (!currentRoom) {
+                alert("Join a room first.");
+                return;
+            }
+
+            const message = document.getElementById("message").value.trim();
+            if (!message) {
+                alert("Cannot send an empty message.");
+                return;
+            }
+
+            socket.emit("sendMessage", { room: currentRoom, message });
+            document.getElementById("message").value = "";
+        }
+
+        // Listen for previous messages when joining a room
+        socket.on("previousMessages", (messages) => {
+            const messagesDiv = document.getElementById("messages");
+            messages.forEach((msg) => {
+                messagesDiv.innerHTML += `<p><strong>${msg.sender}:</strong> ${msg.message}</p>`;
+            });
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        });
+
+        // Listen for new messages
+        socket.on("newMessage", (data) => {
+            const messagesDiv = document.getElementById("messages");
+            messagesDiv.innerHTML += `<p><strong>${data.sender}:</strong> ${data.message}</p>`;
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        });
+
+        // Listen for room updates
+        socket.on("roomUpdate", (data) => {
+            let userList = data.users.map(user => user.username).join(", ");
+            document.getElementById("roomUsers").innerText = `Users in room: ${userList}`;
+        });
+
+        // Listen for user-joined messages
+        socket.on("user-joined", (data) => {
+            const messagesDiv = document.getElementById("messages");
+            messagesDiv.innerHTML += `<p style="color: green;"><em>${data.message}</em></p>`;
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        });
+
+        // Listen for user-left messages
+        socket.on("user-left", (data) => {
+            const messagesDiv = document.getElementById("messages");
+            messagesDiv.innerHTML += `<p style="color: red;"><em>${data.message}</em></p>`;
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        });
+
+        // Handle errors
+        socket.on("error", (data) => {
+            alert(data.message);
+        });
+    </script>
+
+</body>
+</html>
