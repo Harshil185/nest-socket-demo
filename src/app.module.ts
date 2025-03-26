@@ -6,10 +6,11 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from './chat/schemas/user.schema';
 import { Message, MessageSchema } from './chat/schemas/message.schema';
 import { ChatService } from './chat/chat.service';
+require('dotenv').config();
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb+srv://harshil0518:harshil185@cluster0.ng7eftm.mongodb.net/chat'),
+    MongooseModule.forRoot(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.ng7eftm.mongodb.net/chat`),
     MongooseModule.forFeature([
       { name: User.name, schema: UserSchema },
       { name: Message.name, schema: MessageSchema },
