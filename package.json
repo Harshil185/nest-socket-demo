@@ -7,7 +7,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "nest build",
-    "vercel-build": "nest build && cp -r public dist/ && cp -r *.css dist/ && cp -r *.html dist/",
+    "vercel-build": "nest build && mkdir -p dist/public && cp -r public/* dist/public/ && cp -r *.css dist/ && cp -r *.html dist/ && cp -r *.js dist/ && cp -r *.png dist/ && cp -r *.ico dist/",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",

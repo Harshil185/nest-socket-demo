@@ -13,8 +13,11 @@ require('dotenv').config();
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '../'),
+      rootPath: join(__dirname, '../../'),
       serveRoot: '/',
+      serveStaticOptions: {
+        index: false,
+      },
     }),
     MongooseModule.forRoot(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@cluster0.ng7eftm.mongodb.net/chat`),
     MongooseModule.forFeature([
