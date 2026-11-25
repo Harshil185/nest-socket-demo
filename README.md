@@ -94,3 +94,9 @@ Frontend (HTML + JavaScript Client)
 HTML + CSS (Styled for a professional look)
 
 JavaScript (Client-side Socket.io for WebSockets)
+
+<img width="576" height="806" alt="Screenshot from 2025-03-21 15-30-26" src="https://github.com/user-attachments/assets/f24468b9-5c9a-4536-804a-c851b4d78a63" />
+
+
+<img width="699" height="962" alt="Screenshot 2025-03-22 182211" src="https://github.com/user-attachments/assets/6ad92b51-a124-4c17-b34b-38326c9a32b2" />
+
